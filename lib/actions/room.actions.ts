@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { liveblocks } from "../liveblocks";
 import { revalidatePath } from "next/cache";
 import { parseStringify } from "../utils";
-export const createDoument = async ({
+export const createDocument = async ({
   userId,
   email,
 }: CreateDocumentParams) => {
