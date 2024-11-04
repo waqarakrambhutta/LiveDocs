@@ -1,5 +1,11 @@
+import CollaborativeRoom from "@/components/CollaborativeRoom";
+
 const Documents = () => {
-  return <div>this is documents page</div>;
+  return (
+    <div className="flex flex-col w-full items-center">
+      <CollaborativeRoom />
+    </div>
+  );
 };
 
 export default Documents;
