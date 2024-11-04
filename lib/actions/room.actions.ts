@@ -33,3 +33,26 @@ export const createDocument = async ({
     console.log(`Error happened while creating a room: ${error}`);
   }
 };
+
+export const getDocument = async ({
+  roomId,
+  userId,
+}: {
+  roomId: string;
+  userId: string;
+}) => {
+  try {
+    const room = await liveblocks.getRoom(roomId);
+
+    // TODO: Bring this back later on. As its not redirecting to the document after sign-in
+    // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+
+    // if (!hasAccess) {
+    //   throw new Error("Your don't have access to this room");
+    // }
+
+    return parseStringify(room);
+  } catch (error) {
+    console.log(`Error happened while getting the room: ${error}`);
+  }
+};
