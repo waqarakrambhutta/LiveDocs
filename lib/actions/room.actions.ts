@@ -50,7 +50,7 @@ export const getDocument = async ({
     // if (!hasAccess) {
     //   throw new Error("Your don't have access to this room");
     // }
-
+    console.log("action room:", parseStringify(room));
     return parseStringify(room);
   } catch (error) {
     console.log(`Error happened while getting the room: ${error}`);
