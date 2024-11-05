@@ -123,5 +123,4 @@ const CollaborativeRoom = ({
     </RoomProvider>
   );
 };
-
 export default CollaborativeRoom;
