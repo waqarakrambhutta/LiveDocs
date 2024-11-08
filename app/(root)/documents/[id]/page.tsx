@@ -1,10 +1,8 @@
 import CollaborativeRoom from "@/components/CollaborativeRoom";
 import { getDocument } from "@/lib/actions/room.actions";
-import { parseStringify } from "@/lib/utils";
+import { getClerkUsers } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { userAgent } from "next/server";
-import { json } from "stream/consumers";
 
 const Documents = async ({ params: { id } }: SearchParamProps) => {
   const clerkUser = await currentUser();
@@ -14,15 +12,30 @@ const Documents = async ({ params: { id } }: SearchParamProps) => {
     roomId: id,
     userId: clerkUser.emailAddresses[0].emailAddress,
   })) as any;
-  // TODO: Assess the permission of the user to access the document
+
+  const userIds = Object.keys(room.usersAccesses);
+  const users = await getClerkUsers({ userIds });
+
+  const usersData = users.map((user: User) => ({
+    ...user,
+    userType: room.usersAccesses[user.email]?.includes("room:write")
+      ? "editor"
+      : "viewer",
+  }));
+
+  const currentUserType = room.usersAccesses[
+    clerkUser.emailAddresses[0].emailAddress
+  ]?.includes("room:write")
+    ? "editor"
+    : "viewer";
 
   return (
     <div className="flex flex-col w-full items-center">
       <CollaborativeRoom
         roomId={id}
         roomMetadata={room.metadata}
-        users={[]}
-        currentUserType={"editor"}
+        users={usersData}
+        currentUserType={currentUserType}
       />
     </div>
   );
