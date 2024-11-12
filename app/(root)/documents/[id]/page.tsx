@@ -23,9 +23,9 @@ const Documents = async ({ params: { id } }: SearchParamProps) => {
       : "viewer",
   }));
 
-  const currentUserType = room.usersAccesses[
+  const currentUserType = (await room.usersAccesses[
     clerkUser.emailAddresses[0].emailAddress
-  ]?.includes("room:write")
+  ]?.includes("room:write"))
     ? "editor"
     : "viewer";
 
